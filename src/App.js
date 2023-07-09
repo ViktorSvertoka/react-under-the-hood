@@ -1,23 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState, useCallback } from 'react';
+import Button from './components/UI/Button';
+import ParagraphOutput from './components/Output/ParagraphOutput';
 
 function App() {
+  const [isParagraphShown, setIsParagraphShown] = useState(false);
+  const [isTogglingActivated, setIsTogglingActivated] = useState(false);
+
+  console.log('App Component');
+
+  const toogleParagraph = useCallback(() => {
+    if (isTogglingActivated) {
+      setIsParagraphShown(prevIsParagraphShown => !prevIsParagraphShown);
+    }
+  }, [isTogglingActivated]);
+
+  const activateToggling = () => {
+    setIsTogglingActivated(true);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <h1>React під Капотом</h1>
+      <ParagraphOutput isShown={isParagraphShown} />
+      <Button onClick={activateToggling}>Активувати Перемикання</Button>
+      <Button onClick={toogleParagraph}>Показати / Приховати</Button>
     </div>
   );
 }
